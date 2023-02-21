@@ -12,6 +12,7 @@ public abstract class MengdeTest {
     private MengdeADT<Integer> begge = null;
     private MengdeADT<Integer> m1 = new KjedetMengde<Integer>();
     private MengdeADT<Integer> m2 = new TabellMengde<Integer>();
+    private MengdeADT<Integer> m3 = new KjedetMengde<Integer>();
     private MengdeADT<Integer> fasit = new KjedetMengde<Integer>();
 
 
@@ -29,6 +30,12 @@ public abstract class MengdeTest {
         m2.leggTil(3);
         m2.leggTil(2);
 
+        m3.leggTil(6);
+        m3.leggTil(5);
+        m3.leggTil(8);
+        m3.leggTil(3);
+        m3.leggTil(2);
+        
         fasit.leggTil(4);
         fasit.leggTil(2);
         fasit.leggTil(7);
@@ -46,8 +53,46 @@ public abstract class MengdeTest {
 
         begge = m1.union(m2);
 
-        assertEquals(begge, fasit);
+        assertFalse(begge.erTom());
+        assertTrue(begge.equals(fasit));
+        
+        begge = m2.union(m3);
+        
+        assertFalse(begge.erTom());
+        assertTrue(begge.equals(m2));
 
+    }
+    
+    @Test
+    public void snittTest() {
+    	
+    	MengdeADT<Integer> snitt = new TabellMengde();
+    	snitt.leggTil(2);
+    	
+    	begge = m1.snitt(m2);
+    	
+    	assertFalse(begge.erTom());
+    	assertTrue(begge.equals(snitt));
+    	
+    	begge = m2.snitt(fasit);
+    	
+    	assertFalse(begge.erTom());
+    	assertTrue(begge.equals(m2));
+    	
+    }
+    
+    @Test
+    public void differanse() {
+    	
+    	begge = fasit.differens(m2);
+    	
+    	assertFalse(begge.erTom());
+    	assertTrue(begge.equals(m3));
+    	
+    	begge = m3.differens(m2);
+    	
+    	assertTrue(begge.erTom());
+    	
     }
 }
 

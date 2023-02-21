@@ -6,6 +6,7 @@ import java.util.Random;
 
 import no.hvl.dat102.exception.EmptyCollectionException;
 import no.hvl.dat102.mengde.adt.MengdeADT;
+import no.hvl.dat102.mengde.kjedet.KjedetMengde;
 
 public class TabellMengde<T> implements MengdeADT<T> {
 	// ADT-en Mengde implementert som tabell
@@ -137,15 +138,14 @@ public class TabellMengde<T> implements MengdeADT<T> {
 		if (getClass() != m2.getClass()) {
 			return false;
 		}
-		T element = (T) m2;
-		MengdeADT<T> M2 = (TabellMengde<T>) element;
+		MengdeADT<T> M2 = (TabellMengde<T>) m2;
 		if (this.antall != M2.antall()) {
 			likeMengder = false;
 		} else {
 			Iterator<T> teller = M2.iterator();
 			Iterator<T> teller2 = this.iterator();
 
-			if (teller2 == teller) {
+			if (teller2.equals(teller)) {
 				likeMengder = true;
 			} else {
 				likeMengder = false;
@@ -155,7 +155,7 @@ public class TabellMengde<T> implements MengdeADT<T> {
 	}
 
 	@Override
-	public MengdeADT<T> union(MengdeADT<T> m2) { // Denne metoden erstattes med en mer effektiv, se KladdeoppgaveNr3
+	public MengdeADT<T> union(MengdeADT<T> m2) {
 		TabellMengde<T> begge = new TabellMengde<T>();
 		for (int i = 0; i < antall; i++) {
 			begge.leggTil(tab[i]);
@@ -163,7 +163,10 @@ public class TabellMengde<T> implements MengdeADT<T> {
 		Iterator<T> teller = m2.iterator();
 
 		while (teller.hasNext()) {
-			begge.leggTil(teller.next());
+			T element = teller.next();
+			if (!(begge.inneholder(element))) {
+				((TabellMengde<T>) begge).settInn(element);
+			}
 		}
 		return (MengdeADT<T>) begge;
 	}
@@ -172,9 +175,15 @@ public class TabellMengde<T> implements MengdeADT<T> {
 	public MengdeADT<T> snitt(MengdeADT<T> m2) {
 		MengdeADT<T> snittM = new TabellMengde<T>();
 		T element = null;
-		/*
-		 * ...Fyll ut senere
-		 */
+		Iterator<T> teller = m2.iterator();
+
+		while (teller.hasNext()) {
+			element = teller.next();
+			if (this.inneholder(element)) {
+				((TabellMengde<T>) snittM).settInn(element);
+			}
+		}
+
 		return snittM;
 	}
 
@@ -182,11 +191,14 @@ public class TabellMengde<T> implements MengdeADT<T> {
 	public MengdeADT<T> differens(MengdeADT<T> m2) {
 		MengdeADT<T> differensM = new TabellMengde<T>();
 		T element;
-		/*
-		 * Fyll ut senere
-		 * 
-		 * if (!m2.inneholder(element)) ((TabellMengde<T>) differensM).settInn(element);
-		 */
+		Iterator<T> teller = this.iterator();
+
+		while (teller.hasNext()) {
+			element = teller.next();
+			if (!(m2.inneholder(element))) {
+				((TabellMengde<T>) differensM).settInn(element);
+			}
+		}
 
 		return differensM;
 	}
@@ -194,8 +206,28 @@ public class TabellMengde<T> implements MengdeADT<T> {
 	@Override
 	public boolean undermengde(MengdeADT<T> m2) {
 		boolean erUnderMengde = true;
-		// ...Fyll ut senere
-		return false;
+		T element;
+		Iterator<T> teller = m2.iterator();
+
+		if (m2.equals(this)) {
+			return true;
+		}
+		if (m2.erTom()) {
+			return true;
+		}
+		if (m2.antall() > this.antall) {
+			return false;
+		}
+
+		while (erUnderMengde && teller.hasNext()) {
+			element = teller.next();
+
+			if (!(this.inneholder(element))) {
+				erUnderMengde = false;
+			}
+		}
+
+		return erUnderMengde;
 	}
 
 	@Override

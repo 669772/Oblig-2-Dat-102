@@ -45,6 +45,13 @@ public class Medlem {
 	public void setStatusIndeks(int statusIndeks) {
 		this.statusIndeks = statusIndeks;
 	}
+	
+	public boolean passerTil(Medlem medlem2) {
+		boolean passer = false;
+		
+		
+		return passer;
+	}
 
 	public void skrivUt() {
 

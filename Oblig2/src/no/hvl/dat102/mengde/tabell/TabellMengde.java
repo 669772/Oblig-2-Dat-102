@@ -126,7 +126,7 @@ public class TabellMengde<T> implements MengdeADT<T> {
 
 	@Override
 	public boolean equals(Object m2) {
-
+		
 		boolean likeMengder = true;
 
 		if (this == m2) {
@@ -144,10 +144,11 @@ public class TabellMengde<T> implements MengdeADT<T> {
 		} else {
 			Iterator<T> teller = M2.iterator();
 			Iterator<T> teller2 = this.iterator();
-
+			
 			if (teller2.equals(teller)) {
 				likeMengder = true;
-			} else {
+			}
+			else {
 				likeMengder = false;
 			}
 		}
@@ -155,7 +156,7 @@ public class TabellMengde<T> implements MengdeADT<T> {
 	}
 
 	@Override
-	public MengdeADT<T> union(MengdeADT<T> m2) {
+	public MengdeADT<T> union(MengdeADT<T> m2) { 
 		TabellMengde<T> begge = new TabellMengde<T>();
 		for (int i = 0; i < antall; i++) {
 			begge.leggTil(tab[i]);
@@ -176,14 +177,14 @@ public class TabellMengde<T> implements MengdeADT<T> {
 		MengdeADT<T> snittM = new TabellMengde<T>();
 		T element = null;
 		Iterator<T> teller = m2.iterator();
-
+		
 		while (teller.hasNext()) {
 			element = teller.next();
 			if (this.inneholder(element)) {
 				((TabellMengde<T>) snittM).settInn(element);
 			}
 		}
-
+		
 		return snittM;
 	}
 
@@ -192,7 +193,7 @@ public class TabellMengde<T> implements MengdeADT<T> {
 		MengdeADT<T> differensM = new TabellMengde<T>();
 		T element;
 		Iterator<T> teller = this.iterator();
-
+		
 		while (teller.hasNext()) {
 			element = teller.next();
 			if (!(m2.inneholder(element))) {
@@ -208,25 +209,25 @@ public class TabellMengde<T> implements MengdeADT<T> {
 		boolean erUnderMengde = true;
 		T element;
 		Iterator<T> teller = m2.iterator();
-
-		if (m2.equals(this)) {
+		
+		if(m2.equals(this)) {
 			return true;
 		}
-		if (m2.erTom()) {
+		if(m2.erTom()) {
 			return true;
 		}
-		if (m2.antall() > this.antall) {
+		if(m2.antall() > this.antall) {
 			return false;
 		}
-
-		while (erUnderMengde && teller.hasNext()) {
+		
+		while( erUnderMengde && teller.hasNext() ) {
 			element = teller.next();
-
-			if (!(this.inneholder(element))) {
+			
+			if( !(this.inneholder(element)) ) {
 				erUnderMengde = false;
 			}
 		}
-
+		
 		return erUnderMengde;
 	}
 
@@ -241,6 +242,15 @@ public class TabellMengde<T> implements MengdeADT<T> {
 		}
 		tab[antall] = element;
 		antall++;
+	}
+	
+	@Override
+	public String toString() {
+		String resultat = "";
+		for(int i = 0; i < antall; i++) {
+			resultat += tab[i].toString() + "\t";
+		}
+		return resultat;
 	}
 
 }// class

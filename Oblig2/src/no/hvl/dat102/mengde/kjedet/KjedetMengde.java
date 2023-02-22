@@ -68,7 +68,7 @@ public class KjedetMengde<T> implements MengdeADT<T> {
 	}//
 
 	@Override
-	public T fjern(T element) { // Denne skal vi se p� litt senere
+	public T fjern(T element) { //Denne skal vi se p� litt senere
 
 		if (erTom())
 			throw new EmptyCollectionException("mengde");
@@ -148,10 +148,11 @@ public class KjedetMengde<T> implements MengdeADT<T> {
 		} else {
 			Iterator<T> teller = m2.iterator();
 			Iterator<T> teller2 = this.iterator();
-
+			
 			if (teller2.equals(teller)) {
 				likeMengder = true;
-			} else {
+			}
+			else {
 				likeMengder = false;
 			}
 		}
@@ -168,22 +169,23 @@ public class KjedetMengde<T> implements MengdeADT<T> {
 		return antall;
 	}
 
+
 	@Override
-	public MengdeADT<T> union(MengdeADT<T> m2) {
+	public MengdeADT<T> union (MengdeADT<T> m2) { 
 		KjedetMengde<T> begge = new KjedetMengde<T>();
-		LinearNode<T> aktuell = start;
-		while (aktuell != null) {
-			begge.settInn(aktuell.getElement());
-			aktuell = aktuell.getNeste();
-		}
-		Iterator<T> teller = m2.iterator();
-		while (teller.hasNext()) {
-			T element = teller.next();
-			if (!inneholder(element)) {
-				begge.settInn(element);
-			}
-		}
-		return begge;
+	    LinearNode<T> aktuell = start;
+	    while (aktuell != null) {    
+	          begge.settInn(aktuell.getElement());
+	          aktuell = aktuell.getNeste(); 
+	    }
+	    Iterator<T> teller = m2.iterator();
+	    while (teller.hasNext()){
+	           T element = teller.next();
+	           if(!inneholder(element)) {
+	        	   begge.settInn(element);   
+	           }
+	     }   
+	    return begge;
 	}
 
 	@Override
@@ -191,7 +193,7 @@ public class KjedetMengde<T> implements MengdeADT<T> {
 		MengdeADT<T> snittM = new KjedetMengde<T>();
 		T element;
 		Iterator<T> teller = m2.iterator();
-
+		
 		while (teller.hasNext()) {
 			element = teller.next();
 			if (this.inneholder(element)) {
@@ -207,7 +209,7 @@ public class KjedetMengde<T> implements MengdeADT<T> {
 		MengdeADT<T> differensM = new KjedetMengde<T>();
 		T element;
 		Iterator<T> teller = this.iterator();
-
+		
 		while (teller.hasNext()) {
 			element = teller.next();
 			if (!(m2.inneholder(element))) {
@@ -223,25 +225,25 @@ public class KjedetMengde<T> implements MengdeADT<T> {
 		boolean erUnderMengde = true;
 		T element;
 		Iterator<T> teller = m2.iterator();
-
-		if (m2.equals(this)) {
+		
+		if(m2.equals(this)) {
 			return true;
 		}
-		if (m2.erTom()) {
+		if(m2.erTom()) {
 			return true;
 		}
-		if (m2.antall() > this.antall) {
+		if(m2.antall() > this.antall) {
 			return false;
 		}
-
-		while (erUnderMengde && teller.hasNext()) {
+		
+		while( erUnderMengde && teller.hasNext() ) {
 			element = teller.next();
-
-			if (!(this.inneholder(element))) {
+			
+			if( !(this.inneholder(element)) ) {
 				erUnderMengde = false;
 			}
 		}
-
+		
 		return erUnderMengde;
 	}
 
@@ -250,11 +252,22 @@ public class KjedetMengde<T> implements MengdeADT<T> {
 		return new KjedetIterator<T>(start);
 	}
 
-	private void settInn(T element) { // Hjelpemetode
+	private void settInn(T element) { //Hjelpemetode
 		LinearNode<T> nyNode = new LinearNode<T>(element);
 		nyNode.setNeste(start);
 		start = nyNode;
 		antall++;
 	}
 
-}// class
+	@Override
+	public String toString() {
+		String resultat = "";
+		LinearNode<T> aktuell = start;
+		while (aktuell != null) {
+			resultat += aktuell.getElement().toString() + "\t";
+			aktuell = aktuell.getNeste();
+		}
+		return resultat;
+	}
+	
+}

@@ -16,6 +16,15 @@ public class Datakontakt {
 		medlemmer = new TabellMengde<Medlem>();
 		antallMedlemmer = 0;
 	}
+	
+	public MengdeADT<Medlem> getMedlemmer() {
+		return medlemmer;
+	}
+	
+	public void leggTilMedlem(Medlem medlem) {
+		medlemmer.leggTil(medlem);
+		antallMedlemmer++;
+	}
 
 	public int finnMedlemsIndeks(String medlemsnavn) {
 		int indeks = -1;

@@ -126,34 +126,32 @@ public class TabellMengde<T> implements MengdeADT<T> {
 
 	@Override
 	public boolean equals(Object m2) {
-		
-		boolean likeMengder = true;
 
-		if (this == m2) {
-			return true;
-		}
-		if (m2 == null) {
-			return false;
-		}
-		if (getClass() != m2.getClass()) {
-			return false;
-		}
-		MengdeADT<T> M2 = (TabellMengde<T>) m2;
-		if (this.antall != M2.antall()) {
-			likeMengder = false;
-		} else {
-			Iterator<T> teller = M2.iterator();
-			Iterator<T> teller2 = this.iterator();
-			
-			if (teller2.equals(teller)) {
-				likeMengder = true;
-			}
-			else {
-				likeMengder = false;
-			}
-		}
-		return likeMengder;
-	}
+        if (this == m2) {
+            return true;
+        }
+        if (m2 == null) {
+            return false;
+        }
+        if (getClass() != m2.getClass()) {
+            return false;
+        }
+        MengdeADT<T> M2 = (TabellMengde<T>) m2;
+        if (this.antall != M2.antall()) {
+            return false;
+        } else {
+            T element;
+            Iterator<T> teller = M2.iterator();
+
+            while (teller.hasNext()) {
+                element = teller.next();
+                if (!(inneholder(element))) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
 	@Override
 	public MengdeADT<T> union(MengdeADT<T> m2) { 

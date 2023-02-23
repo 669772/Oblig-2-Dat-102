@@ -50,6 +50,9 @@ public class Medlem {
 		boolean passer = false;
 		
 		
+		if(this.hobbyer.equals(medlem2.hobbyer)) {
+			passer = true;
+		}
 		return passer;
 	}
 

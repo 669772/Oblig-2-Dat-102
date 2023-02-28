@@ -84,14 +84,16 @@ public class Tekstgrensesnitt {
 		String valg1 = scanner.nextLine();
 		valg1 = valg1.toLowerCase();
 
-			if (valg1.equals("medlem")) {
-				arkiv.leggTilMedlem(lesMedlem());
-			} else if (valg1.equals("parliste")) {
-				skrivParListe(arkiv);
-			} else {
-				System.out.println("Feil innskriving");
-			}
-			
+		if (valg1.equals("medlem")) {
+			arkiv.leggTilMedlem(lesMedlem());
+		} else if (valg1.equals("parliste")) {
+			skrivParListe(arkiv);
+		} else {
+			System.out.println("Feil innskriving");
+		}
+
+		if (!(valg1.equals("stop"))) {
 			meny(arkiv);
+		}
 	}
 }
